@@ -1,0 +1,102 @@
+.App {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	background-color: grey;
+	height: 100vh;
+	width: 100%;
+}
+
+.App h2 {
+	color: #ffffff;
+}
+
+p {
+	padding: 0;
+	margin: 0;
+}
+
+form input {
+	padding: 10px;
+	width: 20%;
+}
+
+.drag-n-drop {
+	margin-top: 20px;
+	background: grey;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}
+
+.drag-n-drop .dnd-group {
+	background-color: #61dafb;
+	border: 1px solid #000000;
+	border-radius: 5px;
+	flex: 2;
+	padding: 20px;
+	cursor: pointer;
+}
+
+.drag-n-drop .dnd-group .dnd-item {
+	margin: 10px;
+	background-color: ivory;
+	color: #000000;
+	text-align: left;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.edit-button {
+	padding: 5px;
+	cursor: pointer;
+}
+
+.edit-button:hover {
+	color: blue;
+}
+
+.delete-button {
+	padding: 5px;
+	cursor: pointer;
+}
+
+.delete-button:hover {
+	color: red;
+}
+/* .App-logo {
+	height: 40vmin;
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
+} */
+
+.App-header {
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+
+/* .App-link {
+	color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+} */
