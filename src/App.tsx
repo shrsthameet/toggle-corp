@@ -78,52 +78,56 @@ function App() {
 					/>
 					<Button disabled={!data.todoName}>Add +</Button>
 				</form>
-				<div className='drag-n-drop'>
-					<DragDivision title={'TODO'} dragOver={dragOver} onDrop={dropItem} currentStatus={'todo'}>
-						{todoItems.map(
-							todoItem =>
-								todoItem.status === 'todo' && (
-									<Draggable
-										dragStart={onDragStart}
-										key={todoItem.id}
-										todoItem={todoItem}
-										deleteTodo={deleteTodo}
-									/>
-								)
-						)}
-					</DragDivision>
-					<DragDivision
-						title={'IN PROGRESS'}
-						dragOver={dragOver}
-						onDrop={dropItem}
-						currentStatus={'inProgress'}
-					>
-						{todoItems.map(
-							todoItem =>
-								todoItem.status === 'inProgress' && (
-									<Draggable
-										dragStart={onDragStart}
-										key={todoItem.id}
-										todoItem={todoItem}
-										deleteTodo={deleteTodo}
-									/>
-								)
-						)}
-					</DragDivision>
-					<DragDivision title={'DONE'} dragOver={dragOver} onDrop={dropItem} currentStatus={'done'}>
-						{todoItems.map(
-							todoItem =>
-								todoItem.status === 'done' && (
-									<Draggable
-										dragStart={onDragStart}
-										key={todoItem.id}
-										todoItem={todoItem}
-										deleteTodo={deleteTodo}
-									/>
-								)
-						)}
-					</DragDivision>
-				</div>
+				{todoItems.length ? (
+					<div className='drag-n-drop'>
+						<DragDivision title={'TODO'} dragOver={dragOver} onDrop={dropItem} currentStatus={'todo'}>
+							{todoItems.map(
+								todoItem =>
+									todoItem.status === 'todo' && (
+										<Draggable
+											dragStart={onDragStart}
+											key={todoItem.id}
+											todoItem={todoItem}
+											deleteTodo={deleteTodo}
+										/>
+									)
+							)}
+						</DragDivision>
+						<DragDivision
+							title={'IN PROGRESS'}
+							dragOver={dragOver}
+							onDrop={dropItem}
+							currentStatus={'inProgress'}
+						>
+							{todoItems.map(
+								todoItem =>
+									todoItem.status === 'inProgress' && (
+										<Draggable
+											dragStart={onDragStart}
+											key={todoItem.id}
+											todoItem={todoItem}
+											deleteTodo={deleteTodo}
+										/>
+									)
+							)}
+						</DragDivision>
+						<DragDivision title={'DONE'} dragOver={dragOver} onDrop={dropItem} currentStatus={'done'}>
+							{todoItems.map(
+								todoItem =>
+									todoItem.status === 'done' && (
+										<Draggable
+											dragStart={onDragStart}
+											key={todoItem.id}
+											todoItem={todoItem}
+											deleteTodo={deleteTodo}
+										/>
+									)
+							)}
+						</DragDivision>
+					</div>
+				) : (
+					<h5>Board is empty. Add Items to get started.</h5>
+				)}
 			</div>
 		</>
 	)
