@@ -9,4 +9,7 @@ type FunctionWithParam<T> = (p: T) => void
 /** Function with no parameter returning void*/
 type FunctionWithNoParam = () => void
 
-export type { GenericObject, Nullable, FunctionWithParam, FunctionWithNoParam }
+/** Function with parameter with returning type*/
+type FunctionWithNoParamButReturn<R> = () => R
+
+export type { GenericObject, Nullable, FunctionWithParam, FunctionWithNoParam, FunctionWithNoParamButReturn }

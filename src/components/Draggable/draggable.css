@@ -1,0 +1,37 @@
+.mainStyle {
+	margin: 10px;
+	color: #ffffff;
+	text-align: left;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	border-radius: 10px;
+}
+
+.dnd-item-todo {
+	background-color: rgb(247, 123, 95);
+}
+
+.dnd-item-inProgress {
+	background-color: rgb(24, 147, 252);
+}
+
+.dnd-item-done {
+	background-color: rgb(84, 213, 124);
+}
+
+.delete-button {
+	padding: 5px;
+	cursor: pointer;
+	border: 1px solid #ffffff;
+	padding: 5px 15px 5px 15px;
+	background: #ffffff;
+	color: #000000;
+	border-radius: 5px;
+}
+
+.delete-button:hover {
+	background: tomato;
+	color: #ffffff;
+	transition: 0.2s ease-in;
+}

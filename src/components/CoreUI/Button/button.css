@@ -13,3 +13,15 @@
 .button:hover {
 	background: #2e2d2d;
 }
+
+.disable {
+	cursor: not-allowed;
+	padding: 0.9rem 2rem;
+	border-radius: 5px;
+	font-weight: 700;
+	font-size: 1.2rem;
+	letter-spacing: 0.1rem;
+	outline: none;
+	background: rgb(116, 113, 113);
+	color: #ffffff;
+}

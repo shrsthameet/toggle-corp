@@ -8,7 +8,7 @@ type Props = ComponentPropsWithoutRef<'button'> & {
 export const Button = forwardRef(
 	({ index, disabled, children, ...props }: Props, ref: Ref<HTMLButtonElement>): JSX.Element => {
 		return (
-			<button disabled={disabled} ref={ref} className='button' {...props}>
+			<button disabled={disabled} ref={ref} className={disabled ? 'disable' : 'button'} {...props}>
 				{children}
 			</button>
 		)

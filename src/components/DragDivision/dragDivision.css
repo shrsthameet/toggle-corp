@@ -1,0 +1,8 @@
+.dnd-group {
+	background-color: #ffffff;
+	border: 1px solid #000000;
+	border-radius: 5px;
+	flex: 2;
+	padding: 20px;
+	cursor: pointer;
+}

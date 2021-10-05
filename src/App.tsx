@@ -1,38 +1,35 @@
-import { useState, useEffect, ChangeEventHandler, FormEventHandler, DragEvent } from 'react'
+import { useState, useEffect, DragEvent } from 'react'
 import './App.css'
-import { Button, Input } from './components/CoreUI'
-import { Draggable } from './components/Draggable'
-import { getFromStorage, updateStorage } from './utils/localStorage'
-import { FunctionWithParam } from './utils/main'
-import { generateUniqueID } from './utils/UtilFunctions'
-import Modal from 'react-modal'
+import { Button, Input } from 'Components/CoreUI'
+import { getFromStorage, updateStorage } from 'Utils/localStorage'
+import { FunctionWithParam } from 'Utils/main'
+import { generateUniqueID } from 'Utils/UtilFunctions'
+import { Draggable, DragDivision } from 'Components'
+import { useForm } from 'CustomHooks/useForm'
 export interface IAddedItem {
 	id: string
 	name: string
 	status: string
 }
+interface IFormFieldValue {
+	todoName: string
+}
+
+const initialValues = {
+	todoName: '',
+}
 
 function App() {
 	const [todoItems, setTodoItems] = useState<IAddedItem[]>([])
-	const [todoName, setTodoName] = useState('')
-	const [modalIsOpen, setIsOpen] = useState(false)
-
-	const toggleModal = () => {
-		setIsOpen(!modalIsOpen)
-	}
-
-	const handleChange: ChangeEventHandler<HTMLInputElement> = event => {
-		const { value } = event.target
-		setTodoName(value)
-	}
-
-	const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
-		event.preventDefault()
-		let newTodos = [...todoItems, { id: generateUniqueID(), name: todoName, status: 'todo' }]
-		setTodoItems(newTodos)
-		setTodoName('')
-		updateStorage('listOfTodos', JSON.stringify(newTodos))
-	}
+	const { data, handleChange, handleSubmit, setData } = useForm<IFormFieldValue>({
+		initialValues,
+		onSubmit: () => {
+			let newTodos = [...todoItems, { id: generateUniqueID(), name: data.todoName, status: 'todo' }]
+			setTodoItems(newTodos)
+			setData(initialValues)
+			updateStorage('listOfTodos', JSON.stringify(newTodos))
+		},
+	})
 
 	const deleteTodo: FunctionWithParam<string> = todoID => {
 		let filteredTodos = todoItems.filter(todo => todo.id !== todoID)
@@ -48,7 +45,7 @@ function App() {
 		e.dataTransfer.setData('id', id)
 	}
 
-	const onDrop = (e: DragEvent<HTMLDivElement>, currentStatus: string) => {
+	const dropItem = (e: DragEvent<HTMLDivElement>, currentStatus: string) => {
 		let id = e.dataTransfer.getData('id')
 		const updatedTodoItem: IAddedItem[] = todoItems.filter(item => {
 			if (item.id === id) {
@@ -72,12 +69,17 @@ function App() {
 			<div className='App'>
 				<h2>Add Item</h2>
 				<form onSubmit={handleSubmit}>
-					<Input autoComplete='off' type='text' name='todoName' value={todoName} onChange={handleChange} />
-					<Button disabled={!todoName}>Add +</Button>
+					<Input
+						autoComplete='off'
+						type='text'
+						name='todoName'
+						value={data.todoName}
+						onChange={handleChange}
+					/>
+					<Button disabled={!data.todoName}>Add +</Button>
 				</form>
 				<div className='drag-n-drop'>
-					<div className='dnd-group' onDragOver={dragOver} onDrop={e => onDrop(e, 'todo')}>
-						<h4>TODO</h4>
+					<DragDivision title={'TODO'} dragOver={dragOver} onDrop={dropItem} currentStatus={'todo'}>
 						{todoItems.map(
 							todoItem =>
 								todoItem.status === 'todo' && (
@@ -86,13 +88,16 @@ function App() {
 										key={todoItem.id}
 										todoItem={todoItem}
 										deleteTodo={deleteTodo}
-										handleEdit={toggleModal}
 									/>
 								)
 						)}
-					</div>
-					<div className='dnd-group' onDragOver={dragOver} onDrop={e => onDrop(e, 'inProgress')}>
-						<h4>IN PROGRESS</h4>
+					</DragDivision>
+					<DragDivision
+						title={'IN PROGRESS'}
+						dragOver={dragOver}
+						onDrop={dropItem}
+						currentStatus={'inProgress'}
+					>
 						{todoItems.map(
 							todoItem =>
 								todoItem.status === 'inProgress' && (
@@ -101,13 +106,11 @@ function App() {
 										key={todoItem.id}
 										todoItem={todoItem}
 										deleteTodo={deleteTodo}
-										handleEdit={toggleModal}
 									/>
 								)
 						)}
-					</div>
-					<div className='dnd-group' onDragOver={dragOver} onDrop={e => onDrop(e, 'done')}>
-						<h4>DONE</h4>
+					</DragDivision>
+					<DragDivision title={'DONE'} dragOver={dragOver} onDrop={dropItem} currentStatus={'done'}>
 						{todoItems.map(
 							todoItem =>
 								todoItem.status === 'done' && (
@@ -116,20 +119,12 @@ function App() {
 										key={todoItem.id}
 										todoItem={todoItem}
 										deleteTodo={deleteTodo}
-										handleEdit={toggleModal}
 									/>
 								)
 						)}
-					</div>
+					</DragDivision>
 				</div>
 			</div>
-			<Modal isOpen={modalIsOpen} onRequestClose={toggleModal} contentLabel='Example Modal'>
-				<h2>Edit TODO</h2>
-				<form>
-					<Input />
-					<button>Edit</button>
-				</form>
-			</Modal>
 		</>
 	)
 }
