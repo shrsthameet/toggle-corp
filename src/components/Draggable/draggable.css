@@ -3,35 +3,44 @@
 	color: #ffffff;
 	text-align: left;
 	padding: 20px;
-	display: flex;
-	justify-content: space-between;
+	/* display: flex;
+	justify-content: space-between; */
 	border-radius: 10px;
 }
 
-.dnd-item-todo {
+.dnd-item-TODO {
 	background-color: rgb(214, 193, 134);
 }
 
-.dnd-item-inProgress {
+.dnd-item-ONGOING {
 	background-color: rgb(24, 147, 252);
 }
 
-.dnd-item-done {
+.dnd-item-DONE {
 	background-color: rgb(84, 213, 124);
+}
+
+.buttonSection {
+	text-align: right;
 }
 
 .delete-button {
 	padding: 5px;
 	cursor: pointer;
-	border: 1px solid #ffffff;
+	border: 1px solid tomato;
 	padding: 5px 15px 5px 15px;
 	background: #ffffff;
 	color: #000000;
 	border-radius: 5px;
+	color: tomato;
 }
 
 .delete-button:hover {
 	background: tomato;
 	color: #ffffff;
 	transition: 0.2s ease-in;
+}
+
+.accordionBody {
+	text-align: left;
 }

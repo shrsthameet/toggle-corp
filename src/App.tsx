@@ -1,35 +1,45 @@
 import { useState, useEffect, DragEvent } from 'react'
 import './App.css'
-import { Button, Input } from 'Components/CoreUI'
 import { getFromStorage, updateStorage } from 'Utils/localStorage'
-import { FunctionWithParam } from 'Utils/main'
+import { FunctionWithNoParam, FunctionWithParam } from 'Utils/main'
 import { generateUniqueID } from 'Utils/UtilFunctions'
 import { Draggable, DragDivision } from 'Components'
 import { useForm } from 'CustomHooks/useForm'
 export interface IAddedItem {
 	id: string
-	name: string
+	title: string
+	description: string
 	status: string
 }
-interface IFormFieldValue {
+export interface IFormFieldValue {
 	todoName: string
+	description: string
 }
 
-const initialValues = {
+const initialValues: IFormFieldValue = {
 	todoName: '',
+	description: '',
 }
 
 function App() {
 	const [todoItems, setTodoItems] = useState<IAddedItem[]>([])
-	const { data, handleChange, handleSubmit, setData } = useForm<IFormFieldValue>({
-		initialValues,
-		onSubmit: () => {
-			let newTodos = [...todoItems, { id: generateUniqueID(), name: data.todoName, status: 'todo' }]
-			setTodoItems(newTodos)
-			setData(initialValues)
-			updateStorage('listOfTodos', JSON.stringify(newTodos))
-		},
-	})
+	const { data, handleChange, setData } = useForm<IFormFieldValue>({ initialValues })
+
+	const handleSubmit = (title: string, func: FunctionWithNoParam) => {
+		let newTodos = [
+			...todoItems,
+			{
+				id: generateUniqueID(),
+				title: data.todoName,
+				description: data.description,
+				status: title,
+			},
+		]
+		setTodoItems(newTodos)
+		setData(initialValues)
+		updateStorage('listOfTodos', JSON.stringify(newTodos))
+		func()
+	}
 
 	const deleteTodo: FunctionWithParam<string> = todoID => {
 		let filteredTodos = todoItems.filter(todo => todo.id !== todoID)
@@ -67,67 +77,72 @@ function App() {
 	return (
 		<>
 			<div className='App'>
-				<h2>Add Item</h2>
-				<form onSubmit={handleSubmit}>
-					<Input
-						autoComplete='off'
-						type='text'
-						name='todoName'
-						value={data.todoName}
-						onChange={handleChange}
-					/>
-					<Button disabled={!data.todoName}>Add +</Button>
-				</form>
-				{todoItems.length ? (
-					<div className='drag-n-drop'>
-						<DragDivision title={'TODO'} dragOver={dragOver} onDrop={dropItem} currentStatus={'todo'}>
-							{todoItems.map(
-								todoItem =>
-									todoItem.status === 'todo' && (
-										<Draggable
-											dragStart={onDragStart}
-											key={todoItem.id}
-											todoItem={todoItem}
-											deleteTodo={deleteTodo}
-										/>
-									)
-							)}
-						</DragDivision>
-						<DragDivision
-							title={'IN PROGRESS'}
-							dragOver={dragOver}
-							onDrop={dropItem}
-							currentStatus={'inProgress'}
-						>
-							{todoItems.map(
-								todoItem =>
-									todoItem.status === 'inProgress' && (
-										<Draggable
-											dragStart={onDragStart}
-											key={todoItem.id}
-											todoItem={todoItem}
-											deleteTodo={deleteTodo}
-										/>
-									)
-							)}
-						</DragDivision>
-						<DragDivision title={'DONE'} dragOver={dragOver} onDrop={dropItem} currentStatus={'done'}>
-							{todoItems.map(
-								todoItem =>
-									todoItem.status === 'done' && (
-										<Draggable
-											dragStart={onDragStart}
-											key={todoItem.id}
-											todoItem={todoItem}
-											deleteTodo={deleteTodo}
-										/>
-									)
-							)}
-						</DragDivision>
-					</div>
-				) : (
-					<h5>Board is empty. Add Items to get started.</h5>
-				)}
+				<h2>Task Board</h2>
+				<div className='drag-n-drop'>
+					<DragDivision
+						title={'TODO'}
+						dragOver={dragOver}
+						onDrop={dropItem}
+						currentStatus={'TODO'}
+						data={data}
+						handleChange={handleChange}
+						handleSubmit={handleSubmit}
+					>
+						{todoItems.map(
+							todoItem =>
+								todoItem.status === 'TODO' && (
+									<Draggable
+										dragStart={onDragStart}
+										key={todoItem.id}
+										todoItem={todoItem}
+										deleteTodo={deleteTodo}
+									/>
+								)
+						)}
+					</DragDivision>
+					<DragDivision
+						title={'ONGOING'}
+						dragOver={dragOver}
+						onDrop={dropItem}
+						currentStatus={'ONGOING'}
+						data={data}
+						handleChange={handleChange}
+						handleSubmit={handleSubmit}
+					>
+						{todoItems.map(
+							todoItem =>
+								todoItem.status === 'ONGOING' && (
+									<Draggable
+										dragStart={onDragStart}
+										key={todoItem.id}
+										todoItem={todoItem}
+										deleteTodo={deleteTodo}
+									/>
+								)
+						)}
+					</DragDivision>
+					<DragDivision
+						title={'DONE'}
+						dragOver={dragOver}
+						onDrop={dropItem}
+						currentStatus={'DONE'}
+						data={data}
+						handleChange={handleChange}
+						handleSubmit={handleSubmit}
+					>
+						{todoItems.map(
+							todoItem =>
+								todoItem.status === 'DONE' && (
+									<Draggable
+										dragStart={onDragStart}
+										key={todoItem.id}
+										todoItem={todoItem}
+										deleteTodo={deleteTodo}
+									/>
+								)
+						)}
+					</DragDivision>
+				</div>
 			</div>
 		</>
 	)

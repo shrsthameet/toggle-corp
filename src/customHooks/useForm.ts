@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEventHandler, useState } from 'react'
+import { ChangeEventHandler, useState } from 'react'
 
 export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
 	initialValues?: Partial<T>
@@ -14,12 +14,5 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
 		})
 	}
 
-	const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
-		event.preventDefault()
-		if (options?.onSubmit) {
-			options.onSubmit()
-		}
-	}
-
-	return { data, handleChange, handleSubmit, setData }
+	return { data, handleChange, setData }
 }

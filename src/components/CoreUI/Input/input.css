@@ -1,7 +1,8 @@
 .input-style {
-	padding: 18px;
+	padding: 10px;
 	margin-right: 10px;
 	outline: none;
+	width: 100%;
 }
 
 .input-style:focus {

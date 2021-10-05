@@ -1,5 +1,9 @@
-import { DragEvent, FC } from 'react'
-import { FunctionWithParam } from 'Utils/main'
+import { IFormFieldValue } from 'App'
+import { Button, Input } from 'Components/CoreUI'
+import { ModalBox } from 'Components/ModalBox/ModalBox'
+import { useModal } from 'CustomHooks/useModal'
+import { ChangeEventHandler, DragEvent, FC } from 'react'
+import { FunctionWithNoParam, FunctionWithParam } from 'Utils/main'
 import './dragDivision.css'
 
 interface IDragDivision {
@@ -7,14 +11,44 @@ interface IDragDivision {
 	dragOver: FunctionWithParam<DragEvent<HTMLDivElement>>
 	onDrop: (e: DragEvent<HTMLDivElement>, currentStatus: string) => void
 	currentStatus: string
+	data: IFormFieldValue
+	handleChange: ChangeEventHandler
+	handleSubmit: (title: string, func: FunctionWithNoParam) => void
 }
 
 export const DragDivision: FC<IDragDivision> = props => {
-	const { title, children, dragOver, onDrop, currentStatus } = props
+	const { show, handleClose, handleShow } = useModal()
+
+	const { title, children, dragOver, onDrop, currentStatus, data, handleChange, handleSubmit } = props
 	return (
 		<div className='dnd-group' onDragOver={dragOver} onDrop={e => onDrop(e, currentStatus)}>
-			<h4>{title}</h4>
+			<div className='titleSection'>
+				<h4>{title}</h4>
+				<Button onClick={handleShow}>Add Task +</Button>
+			</div>
 			{children}
+			<ModalBox
+				title={title}
+				closeButtonTitle={'Cancel'}
+				confirmButtonTitle={'Add'}
+				show={show}
+				handleClose={handleClose}
+				handleClick={handleSubmit}
+				data={data}
+			>
+				<label>Title</label>
+				<Input autoComplete='off' type='text' name='todoName' value={data.todoName} onChange={handleChange} />
+				<label>Description</label>
+				<div>
+					<textarea
+						maxLength={200}
+						name='description'
+						rows={5}
+						value={data.description}
+						onChange={handleChange}
+					/>
+				</div>
+			</ModalBox>
 		</div>
 	)
 }
