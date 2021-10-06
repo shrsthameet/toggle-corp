@@ -25,10 +25,8 @@ export const Draggable: FC<IDraggableProps> = props => {
 				<div>
 					<p>{todoItem.description}</p>
 				</div>
-				<div>
-					<span className='delete-button' onClick={() => deleteTodo(todoItem.id)}>
-						Delete
-					</span>
+				<div className='delete-button'>
+					<span onClick={() => deleteTodo(todoItem.id)}>Delete</span>
 				</div>
 			</div>
 		</>
