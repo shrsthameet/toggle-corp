@@ -21,7 +21,7 @@ export const Draggable: FC<IDraggableProps> = props => {
 				draggable
 				onDragStart={e => dragStart(e, todoItem.id)}
 			>
-				<p>{todoItem.title}</p>
+				<h4>{todoItem.title}</h4>
 				<div>
 					<p>{todoItem.description}</p>
 				</div>

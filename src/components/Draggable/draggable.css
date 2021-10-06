@@ -3,9 +3,17 @@
 	color: #ffffff;
 	text-align: left;
 	padding: 20px;
-	/* display: flex;
-	justify-content: space-between; */
 	border-radius: 10px;
+}
+
+.mainStyle h4 {
+	font-weight: bold;
+	letter-spacing: 0.04rem;
+}
+
+.mainStyle p {
+	font-size: 13px;
+	letter-spacing: 0.04rem;
 }
 
 .dnd-item-TODO {

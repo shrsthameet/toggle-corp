@@ -10,7 +10,6 @@ interface IDragDivision {
 	title: string
 	dragOver: FunctionWithParam<DragEvent<HTMLDivElement>>
 	onDrop: (e: DragEvent<HTMLDivElement>, currentStatus: string) => void
-	currentStatus: string
 	data: IFormFieldValue
 	handleChange: ChangeEventHandler
 	handleSubmit: (title: string, func: FunctionWithNoParam) => void
@@ -19,9 +18,9 @@ interface IDragDivision {
 export const DragDivision: FC<IDragDivision> = props => {
 	const { show, handleClose, handleShow } = useModal()
 
-	const { title, children, dragOver, onDrop, currentStatus, data, handleChange, handleSubmit } = props
+	const { title, children, dragOver, onDrop, data, handleChange, handleSubmit } = props
 	return (
-		<div className='dnd-group' onDragOver={dragOver} onDrop={e => onDrop(e, currentStatus)}>
+		<div className='dnd-group' onDragOver={dragOver} onDrop={e => onDrop(e, title)}>
 			<div className='titleSection'>
 				<h4>{title}</h4>
 				<Button onClick={handleShow}>Add Task +</Button>

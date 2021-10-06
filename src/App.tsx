@@ -83,7 +83,6 @@ function App() {
 						title={'TODO'}
 						dragOver={dragOver}
 						onDrop={dropItem}
-						currentStatus={'TODO'}
 						data={data}
 						handleChange={handleChange}
 						handleSubmit={handleSubmit}
@@ -104,7 +103,6 @@ function App() {
 						title={'ONGOING'}
 						dragOver={dragOver}
 						onDrop={dropItem}
-						currentStatus={'ONGOING'}
 						data={data}
 						handleChange={handleChange}
 						handleSubmit={handleSubmit}
@@ -125,7 +123,6 @@ function App() {
 						title={'DONE'}
 						dragOver={dragOver}
 						onDrop={dropItem}
-						currentStatus={'DONE'}
 						data={data}
 						handleChange={handleChange}
 						handleSubmit={handleSubmit}
