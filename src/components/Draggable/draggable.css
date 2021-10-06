@@ -17,15 +17,33 @@
 }
 
 .dnd-item-TODO {
-	background-color: rgb(214, 193, 134);
+	background-color: rgb(173, 131, 13);
+}
+
+.dnd-item-TODO:hover {
+	background-color: rgb(150, 111, 6);
+	transition: 0.2s ease-in;
+	box-shadow: 2px 5px 10px rgb(177, 176, 176);
 }
 
 .dnd-item-ONGOING {
 	background-color: rgb(24, 147, 252);
 }
 
+.dnd-item-ONGOING:hover {
+	background-color: rgb(40, 135, 218);
+	transition: 0.2s ease-in;
+	box-shadow: 2px 5px 10px rgb(177, 176, 176);
+}
+
 .dnd-item-DONE {
 	background-color: rgb(84, 213, 124);
+}
+
+.dnd-item-DONE:hover {
+	background-color: rgb(62, 185, 101);
+	transition: 0.2s ease-in;
+	box-shadow: 2px 5px 10px rgb(177, 176, 176);
 }
 
 .buttonSection {
