@@ -2,7 +2,7 @@ import { IFormFieldValue } from 'App'
 import { Button, Input } from 'Components/CoreUI'
 import { ModalBox } from 'Components/ModalBox/ModalBox'
 import { useModal } from 'CustomHooks/useModal'
-import { ChangeEventHandler, DragEvent, FC } from 'react'
+import { ChangeEventHandler, DragEvent, FC, useRef, useEffect } from 'react'
 import { FunctionWithNoParam, FunctionWithParam } from 'Utils/main'
 import './dragDivision.css'
 
@@ -19,6 +19,13 @@ export const DragDivision: FC<IDragDivision> = props => {
 	const { show, handleClose, handleShow } = useModal()
 
 	const { title, children, dragOver, onDrop, data, handleChange, handleSubmit } = props
+
+	const todoName = useRef<HTMLInputElement>(null)
+
+	useEffect(() => {
+		if (todoName && todoName.current) todoName.current.focus()
+	})
+
 	return (
 		<div className='dnd-group' onDragOver={dragOver} onDrop={e => onDrop(e, title)}>
 			<div className='titleSection'>
@@ -26,6 +33,7 @@ export const DragDivision: FC<IDragDivision> = props => {
 				<Button onClick={handleShow}>Add Task +</Button>
 			</div>
 			{children}
+
 			<ModalBox
 				title={title}
 				closeButtonTitle={'Cancel'}
@@ -36,7 +44,15 @@ export const DragDivision: FC<IDragDivision> = props => {
 				data={data}
 			>
 				<label>Title</label>
-				<Input autoComplete='off' type='text' name='todoName' value={data.todoName} onChange={handleChange} />
+				<Input
+					ref={todoName}
+					autoFocus={true}
+					autoComplete='off'
+					type='text'
+					name='todoName'
+					value={data.todoName}
+					onChange={handleChange}
+				/>
 				<label>Description</label>
 				<div>
 					<textarea

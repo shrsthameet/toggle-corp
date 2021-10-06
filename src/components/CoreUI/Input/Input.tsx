@@ -10,17 +10,5 @@ interface InputProps extends ComponentPropsWithoutRef<'input'> {
 export const Input: FC<InputProps> = forwardRef((props, ref) => {
 	const { type = 'text', inputStyle, className, ...remainingProps } = props
 
-	return (
-		<input
-			ref={ref}
-			// className={classNames(
-			// 	styles.inputField,
-			// 	inputStyle,
-			// 	type === 'search' || type === 'password' ? '' : styles.hasNoIcon
-			// )}
-			type={type}
-			className='input-style'
-			{...remainingProps}
-		/>
-	)
+	return <input ref={ref} type={type} className='input-style' {...remainingProps} />
 })
